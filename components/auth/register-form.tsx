@@ -4,7 +4,7 @@ import React, { useTransition, useState } from 'react';
 import { LoginCardWrapper } from '@/components/auth/login-card-wrapper';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema } from '@/schemas';
+import { RegisterSchema } from '@/schemas';
 import {
   Form,
   FormControl,
@@ -18,28 +18,31 @@ import { Button } from '@/components/ui/button';
 import { FormError } from '@/components/form-clue/form-error';
 import { FormSuccess } from '@/components/form-clue/form-success';
 import * as zod from 'zod';
-import { login } from '@/actions/login';
+import { register } from '@/actions/register';
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
+  const [name, setName] = useState<string | undefined>('');
 
-  const form = useForm<zod.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<zod.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: '',
       password: '',
+      name: '',
     },
   });
 
-  const onSubmit = (values: zod.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: zod.infer<typeof RegisterSchema>) => {
     // console.log(values);
 
     setError('');
     setSuccess('');
+    setName('');
     startTransition(() => {
-      login(values).then((data) => {
+      register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
         console.log(data);
@@ -49,9 +52,9 @@ export const LoginForm = () => {
   };
   return (
     <LoginCardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Do not have an Account?"
-      backButtonHref="/auth/register"
+      headerLabel="Create an Account"
+      backButtonLabel="Already have an account?"
+      backButtonHref="/auth/login"
       showSocial
     >
       <Form {...form}>
@@ -69,6 +72,24 @@ export const LoginForm = () => {
                       disabled={isPending}
                       placeholder="please input your email..."
                       type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="name"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <FormControl id="name">
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="please input your name..."
+                      type="text"
                     />
                   </FormControl>
                   <FormMessage />
@@ -99,10 +120,10 @@ export const LoginForm = () => {
           <Button
             type="submit"
             className="w-full"
-            variant={'customlogin'}
+            variant={'customregister'}
             disabled={isPending}
           >
-            Log In
+            Sign Up
           </Button>
         </form>
       </Form>
