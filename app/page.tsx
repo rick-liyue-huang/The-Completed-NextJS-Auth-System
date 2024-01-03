@@ -11,6 +11,7 @@ const font = Podkova({
 
 export default function Home() {
   console.log('Home');
+
   return (
     <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-300 to-green-400">
       <div className="space-y-6 text-center">

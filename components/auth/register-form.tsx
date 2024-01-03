@@ -24,7 +24,6 @@ export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
-  const [name, setName] = useState<string | undefined>('');
 
   const form = useForm<zod.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -40,7 +39,6 @@ export const RegisterForm = () => {
 
     setError('');
     setSuccess('');
-    setName('');
     startTransition(() => {
       register(values).then((data) => {
         setError(data.error);
