@@ -2,7 +2,6 @@ import { GoPasskeyFill } from 'react-icons/go';
 import { Podkova } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { LoginButton } from '@/components/auth/login-button';
 
 const font = Podkova({
   subsets: ['cyrillic-ext'],
@@ -25,11 +24,7 @@ export default function Home() {
           Authorization
         </h1>
         <p className="text-white text-lg">The Auth System</p>
-        <div>
-          <LoginButton>
-            <Button variant={'secondary'}>Log in</Button>
-          </LoginButton>
-        </div>
+        <div></div>
       </div>
     </main>
   );
