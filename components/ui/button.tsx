@@ -19,8 +19,8 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        customlogin: 'bg-yellow-200 text-orange-800',
-        customregister: 'bg-purple-200 text-purple-800',
+        customregister: 'bg-yellow-200 text-orange-800',
+        customlogin: 'bg-purple-200 text-purple-800',
       },
       size: {
         default: 'h-9 px-4 py-2',
