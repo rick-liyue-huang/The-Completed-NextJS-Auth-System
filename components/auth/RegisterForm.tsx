@@ -5,10 +5,10 @@ import { CardWrapper } from '@/components/auth/CardWrapper';
 import { useForm } from 'react-hook-form';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema } from '@/schema';
+import { RegisterSchema } from '@/schema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { login } from '@/actions/login';
+import { register } from '@/actions/register';
 
 import {
   Form,
@@ -22,28 +22,29 @@ import {
 import { FormErrors } from '@/components/auth/FormErrors';
 import { FormSuccess } from './FormSuccess';
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
 
-  const form = useForm<zod.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<zod.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: '',
       password: '',
+      username: '',
     },
   });
 
   const [isPending, startTransition] = useTransition();
 
-  const onHandlerSubmitted = (value: zod.infer<typeof LoginSchema>) => {
+  const onHandlerSubmitted = (value: zod.infer<typeof RegisterSchema>) => {
     // console.log(value);
 
     setError('');
     setSuccess('');
     startTransition(() => {
       // good for loading
-      login(value).then((data) => {
+      register(value).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });
@@ -51,9 +52,9 @@ export const LoginForm = () => {
   };
   return (
     <CardWrapper
-      headerLabel="Login Page"
-      backButtonLabel="Have not yet an account?"
-      backButtonHref="/auth/register"
+      headerLabel="Register Page"
+      backButtonLabel="Already have one account?"
+      backButtonHref="/auth/login"
       showSocial
     >
       <Form {...form}>
@@ -83,6 +84,25 @@ export const LoginForm = () => {
             />
             <FormField
               control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isPending}
+                      placeholder="username..."
+                      {...field}
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormDescription>This is your alias here.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -103,8 +123,8 @@ export const LoginForm = () => {
           </div>
           <FormErrors message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full" variant={'customlogin'}>
-            Login
+          <Button type="submit" className="w-full" variant={'customregister'}>
+            Register
           </Button>
         </form>
       </Form>
