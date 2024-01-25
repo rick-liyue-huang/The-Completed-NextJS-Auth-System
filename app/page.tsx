@@ -2,7 +2,7 @@ import { GoPasskeyFill } from 'react-icons/go';
 import { Podkova } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { LoginButton } from '@/components/ui/self-defined/auth/login-button';
+import { LoginButton } from '@/components/self-defined/auth/login-button';
 
 const font = Podkova({
   subsets: ['cyrillic-ext'],
