@@ -29,7 +29,7 @@ export const CardWrapper = ({
   return (
     <Card className="w-[600px] shadow-md">
       <CardHeader>
-        <Header label={backButtonLabel} />
+        <Header headerLabel={headerLabel} />
       </CardHeader>
       <CardContent>{children}</CardContent>
       {showSocial && (

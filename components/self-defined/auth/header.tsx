@@ -8,18 +8,17 @@ const font = Podkova({
 });
 
 interface Props {
-  label: string;
+  headerLabel: string;
 }
 
-export const Header = ({ label }: Props) => {
+export const Header = ({ headerLabel }: Props) => {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
       <h1
         className={cn('text-3xl font-semibold text-green-600', font.className)}
       >
-        Auth - Login
+        {headerLabel}
       </h1>
-      <p className="text-muted-foreground text-sm">{label}</p>
     </div>
   );
 };
