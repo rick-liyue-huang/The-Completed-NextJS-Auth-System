@@ -1,9 +1,10 @@
 'use server';
 
+// here we only store the user information in database, but not attend the credentials, which is done in auth.config.ts
 import * as z from 'zod';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { RegisterSchema } from '@/schemas';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { db } from '@/lib/db';
 import { getUserByEmail } from '@/data/user';
 
