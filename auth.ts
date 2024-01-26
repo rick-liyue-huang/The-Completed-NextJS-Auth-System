@@ -46,16 +46,24 @@ export const {
       }
       return session;
     },
-    /*
-    async signIn({ user }) {
+
+    async signIn({ user, account }) {
+      // allow oauth login without email verified
+
+      if (account?.provider !== 'credentials') {
+        return true;
+      }
+
       const existingUser = await getUserById(user.id);
 
-      if (!existingUser || !existingUser.emailVerified) {
+      // prevent login if user not exist or email not verified
+      if (!existingUser || !existingUser?.emailVerified) {
         return false; // if user not exist or email not verified, return false, so the user cannot login
       }
+
+      // TODO: add 2FA here
       return true;
     },
-    */
   },
   events: {
     async linkAccount({ user }) {

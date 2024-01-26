@@ -50,7 +50,7 @@ export const LoginForm = () => {
           setError(data.error);
         }
         // TODO: add 2FA
-        // setSuccess(data?.success);
+        setSuccess(data?.success); // will be done under verification token email
       });
     });
   };
