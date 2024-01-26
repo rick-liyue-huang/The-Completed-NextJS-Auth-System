@@ -38,4 +38,10 @@ model User {
   password      String?
   image         String?
   accounts      Account[]
+  role  UserRole @default(USER)
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
