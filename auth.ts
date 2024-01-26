@@ -12,6 +12,7 @@ export const {
   signIn, // export to @/actions/login.ts
   signOut,
 } = NextAuth({
+  callbacks: {},
   // Edge compatibility
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
