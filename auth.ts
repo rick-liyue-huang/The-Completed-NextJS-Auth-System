@@ -46,6 +46,16 @@ export const {
       }
       return session;
     },
+    /*
+    async signIn({ user }) {
+      const existingUser = await getUserById(user.id);
+
+      if (!existingUser || !existingUser.emailVerified) {
+        return false; // if user not exist or email not verified, return false, so the user cannot login
+      }
+      return true;
+    },
+    */
   },
   adapter: PrismaAdapter(db) as any,
   session: { strategy: 'jwt' },
