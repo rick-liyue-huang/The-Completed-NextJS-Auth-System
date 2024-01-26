@@ -9,7 +9,7 @@ import { db } from '@/lib/db';
 export const {
   handlers: { GET, POST },
   auth,
-  signIn,
+  signIn, // export to @/actions/login.ts
   signOut,
 } = NextAuth({
   // Edge compatibility

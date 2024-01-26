@@ -1,10 +1,19 @@
 import type { NextAuthConfig } from 'next-auth';
 import Github from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { LoginSchema, RegisterSchema } from '@/schemas';
+import { LoginSchema } from '@/schemas';
 import { getUserByEmail } from '@/data/user';
 import bcrypt from 'bcryptjs';
 
+/**
+ * type
+ * credentials: {
+      username: { label: "Username", type: "text", placeholder: "jsmith" },
+      password: {  label: "Password", type: "password" }
+    }
+ */
+
+// here we trigger the middleware.ts
 export default {
   providers: [
     CredentialsProvider({

@@ -1,6 +1,5 @@
 // HERE WE DEFINE ALL ROUTES IN OUR APP and used in middleware
 
-import { login } from '@/actions/login';
 /**
  * will be accessible even user is not logged in
  * do not need authentication

@@ -21,6 +21,7 @@ export const login = async (value: z.infer<typeof LoginSchema>) => {
 
   try {
     await signIn('credentials', {
+      // match with 'CredentialsProvider' in auth.config.ts
       email,
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,

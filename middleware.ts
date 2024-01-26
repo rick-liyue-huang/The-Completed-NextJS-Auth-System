@@ -10,6 +10,7 @@ import {
 
 const { auth } = NextAuth(authConfig);
 
+// middleware used to deal with the project route trigger (transfer to the page)
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
@@ -20,7 +21,7 @@ export default auth((req) => {
 
   // if trigger /api/auth just stay in the page
   if (isApiAuthRoute) {
-    return null;
+    return null; // not to anything
   }
 
   // check auth before public routes
@@ -34,7 +35,7 @@ export default auth((req) => {
 
   // if trigger settings page, but not logged in, redirect to login page
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL('/auth/login', nextUrl));
+    return Response.redirect(new URL('/auth/login', nextUrl)); // combine nextUrl with '/auth/login' to get the full url
   }
 
   return null;

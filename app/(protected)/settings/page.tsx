@@ -11,7 +11,7 @@ const SettingsPage = async () => {
       <form
         action={async () => {
           'use server';
-          await signOut();
+          await signOut(); // import from auth
         }}
       >
         <button type="submit">Sign Out</button>
