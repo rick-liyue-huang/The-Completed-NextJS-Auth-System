@@ -19,11 +19,17 @@ import * as z from 'zod';
 import { FormErrors } from './form-errors';
 import { FormSuccess } from './form-success';
 import { login } from '@/actions/login';
+import { useSearchParams } from 'next/navigation';
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = React.useState<string | undefined>('');
   const [success, setSuccess] = React.useState<string | undefined>('');
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get('error') === 'OAuthAccountNotLinked'
+      ? 'Email already in use with another account provider'
+      : '';
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -40,10 +46,11 @@ export const LoginForm = () => {
     startTransition(() => {
       console.log('value: ', value);
       login(value).then((data) => {
-        if (data.error) {
+        if (data?.error) {
           setError(data.error);
         }
-        setSuccess(data.success);
+        // TODO: add 2FA
+        // setSuccess(data?.success);
       });
     });
   };
@@ -69,6 +76,7 @@ export const LoginForm = () => {
                       {...field}
                       placeholder="enter email..."
                       disabled={isPending}
+                      type="email"
                     />
                   </FormControl>
                   <FormMessage className="text-red-300">
@@ -91,6 +99,7 @@ export const LoginForm = () => {
                       {...field}
                       placeholder="enter password..."
                       disabled={isPending}
+                      type="password"
                     />
                   </FormControl>
                   <FormMessage className="text-red-300">
@@ -101,7 +110,7 @@ export const LoginForm = () => {
             />
           </div>
           <FormSuccess message={success} />
-          <FormErrors message={error} />
+          <FormErrors message={error || urlError} />
           <Button
             type="submit"
             className="w-full"

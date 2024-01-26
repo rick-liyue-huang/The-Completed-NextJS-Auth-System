@@ -10,7 +10,7 @@ export const publicRoutes = ['/'];
  * will be accessible only if user is logged in, and can be redirected to settings page
  * need authentication
  */
-export const authRoutes = ['/auth/login', '/auth/register'];
+export const authRoutes = ['/auth/login', '/auth/register', '/auth/error'];
 
 /**
  * starts with this prefix will be for authentication api
