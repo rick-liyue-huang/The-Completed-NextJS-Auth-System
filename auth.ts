@@ -50,6 +50,11 @@ export const {
     async signIn({ user, account }) {
       // allow oauth login without email verified
 
+      console.log('user and account: ---', {
+        user,
+        account,
+      });
+
       if (account?.provider !== 'credentials') {
         return true;
       }

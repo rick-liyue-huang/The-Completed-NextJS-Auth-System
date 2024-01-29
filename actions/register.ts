@@ -37,6 +37,7 @@ export const register = async (value: z.infer<typeof RegisterSchema>) => {
   });
 
   // HERE WE create the verification token
+  // and this action will send the token to @/routes.ts
   const verificationToken = await generateVerificationToken(email);
 
   // HERE WE send the verification email

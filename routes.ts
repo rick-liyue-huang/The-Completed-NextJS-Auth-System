@@ -4,7 +4,7 @@
  * will be accessible even user is not logged in
  * do not need authentication
  */
-export const publicRoutes = ['/'];
+export const publicRoutes = ['/', '/auth/new-verification']; // match with the @/lib/email.ts, here from register action, and then go to /auth/new-verification
 
 /**
  * will be accessible only if user is logged in, and can be redirected to settings page
