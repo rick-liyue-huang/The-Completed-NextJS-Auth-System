@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // used it in register and login
 export const sendEmail = async (email: string, token: string) => {
   // will create new-verification page
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+  const confirmLink = `http://localhost:3001/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
@@ -16,7 +16,7 @@ export const sendEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`; // will create new-password page
+  const resetLink = `http://localhost:3001/auth/new-password?token=${token}`; // will create new-password page
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
