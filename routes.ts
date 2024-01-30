@@ -10,7 +10,12 @@ export const publicRoutes = ['/', '/auth/new-verification']; // match with the @
  * will be accessible only if user is logged in, and can be redirected to settings page
  * need authentication
  */
-export const authRoutes = ['/auth/login', '/auth/register', '/auth/error'];
+export const authRoutes = [
+  '/auth/login',
+  '/auth/register',
+  '/auth/error',
+  '/auth/reset',
+];
 
 /**
  * starts with this prefix will be for authentication api

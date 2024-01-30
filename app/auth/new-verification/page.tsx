@@ -3,7 +3,7 @@ import { NewVerificationForm } from '@/components/self-defined/auth/new-verifica
 
 const NewVerificationPage = () => {
   return (
-    <div>
+    <div className="h-full flex items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-200 to-orange-300">
       <NewVerificationForm />
     </div>
   );
