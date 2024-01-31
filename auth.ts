@@ -5,6 +5,7 @@ import { db } from '@/lib/db';
 import authConfig from '@/auth.config';
 import { getUserById } from '@/data/user';
 import { UserRole } from '@prisma/client';
+import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation';
 
 // auth config used to separate the pure auth from the orm adapter, so middleware only use the pure auth in auth.config.ts, and orm adapter only used in auth.ts
 export const {
@@ -67,6 +68,25 @@ export const {
       }
 
       // TODO: add 2FA here
+      if (existingUser.isTwoFactorEnabled) {
+        // return false;
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
+
+        console.log({ twoFactorConfirmation });
+
+        if (!twoFactorConfirmation) {
+          return false;
+        }
+
+        // delete 2fa confirmation for next login
+        await db.twoFactorConfirmation.delete({
+          where: {
+            id: twoFactorConfirmation.id,
+          },
+        });
+      }
       return true;
     },
   },
