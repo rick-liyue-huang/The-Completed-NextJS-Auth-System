@@ -35,7 +35,17 @@ export default auth((req) => {
 
   // if trigger settings page, but not logged in, redirect to login page
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL('/auth/login', nextUrl)); // combine nextUrl with '/auth/login' to get the full url
+    let callbackUrl = nextUrl.pathname;
+
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const enCodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${enCodedCallbackUrl}`, nextUrl)
+    ); // combine nextUrl with '/auth/login' to get the full url
   }
 
   return null;

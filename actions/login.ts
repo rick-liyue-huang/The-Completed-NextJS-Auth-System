@@ -17,7 +17,10 @@ import {
 } from '@/lib/tokens';
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation';
 
-export const login = async (value: z.infer<typeof LoginSchema>) => {
+export const login = async (
+  value: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null
+) => {
   console.log('login action', value);
 
   const validatedFields = LoginSchema.safeParse(value);
@@ -104,7 +107,7 @@ export const login = async (value: z.infer<typeof LoginSchema>) => {
       // match with 'CredentialsProvider' in auth.config.ts
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   } catch (err) {
     if (err instanceof AuthError) {

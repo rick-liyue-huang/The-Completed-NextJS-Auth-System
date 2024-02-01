@@ -6,6 +6,7 @@ import authConfig from '@/auth.config';
 import { getUserById } from '@/data/user';
 import { UserRole } from '@prisma/client';
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation';
+import { getAccountByUserId } from './data/account';
 
 // auth config used to separate the pure auth from the orm adapter, so middleware only use the pure auth in auth.config.ts, and orm adapter only used in auth.ts
 export const {
@@ -22,6 +23,8 @@ export const {
       // console.log('jwt profile', profile);
       // token.customField = 'customField';
 
+      console.log('called again');
+
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
@@ -30,8 +33,13 @@ export const {
         return token;
       }
 
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+      token.name = existingUser.name; // update the name in token when click update in settings page
+      token.email = existingUser.email; // update the email in token when click update in settings page
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled; // add isTwoFactorEnabled to token
+      token.isOAuth = !!existingAccount; // add isOAuth to token
 
       return token;
     },
@@ -50,6 +58,13 @@ export const {
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean; // match with next-auth.d.ts
       }
+
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
+
       return session;
     },
 

@@ -8,7 +8,7 @@ import React from 'react';
 const ClientPage = () => {
   const user = useCurrentUser();
 
-  return <UserInfo user={user} label="🛠️ Client Page" />;
+  return <UserInfo user={user} label="🖥️ Client Page" />;
 };
 
 export default ClientPage;

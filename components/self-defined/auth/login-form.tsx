@@ -29,6 +29,9 @@ export const LoginForm = () => {
   const [show2FA, setShow2FA] = React.useState<boolean>(false);
 
   const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get('callbackUrl');
+
   const urlError =
     searchParams.get('error') === 'OAuthAccountNotLinked'
       ? 'Email already in use with another account provider'
@@ -39,6 +42,7 @@ export const LoginForm = () => {
     defaultValues: {
       email: '',
       password: '',
+      code: '',
     },
   });
 
@@ -48,7 +52,7 @@ export const LoginForm = () => {
 
     startTransition(() => {
       console.log('value: ', value);
-      login(value)
+      login(value, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset();
@@ -83,7 +87,7 @@ export const LoginForm = () => {
         <form onSubmit={form.handleSubmit(onSubmitted)} className="space-y-6">
           {show2FA && (
             <>
-              <div className="space-x-4">
+              <div>
                 {/* email */}
                 <FormField
                   control={form.control}
@@ -109,62 +113,59 @@ export const LoginForm = () => {
             </>
           )}
           {!show2FA && (
-            <>
-              <div className="space-x-4">
-                {/* email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="email">Email</FormLabel>
-                      <FormControl {...field} id="email">
-                        <Input
-                          {...field}
-                          placeholder="enter email..."
-                          disabled={isPending}
-                          type="email"
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-300">
-                        {form.formState.errors.email?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-                {/* password */}
-              </div>
-              <div className="space-x-4">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="password">Password</FormLabel>
-                      <FormControl {...field} id="password">
-                        <Input
-                          {...field}
-                          placeholder="enter password..."
-                          disabled={isPending}
-                          type="password"
-                        />
-                      </FormControl>
-                      <Button
-                        size="sm"
-                        variant={'link'}
-                        asChild
-                        className="px-0 font-normal"
-                      >
-                        <Link href="/auth/reset">Forgot your password?</Link>
-                      </Button>
-                      <FormMessage className="text-red-300">
-                        {form.formState.errors.password?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </>
+            <div>
+              {/* email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <FormControl {...field} id="email">
+                      <Input
+                        {...field}
+                        placeholder="enter email..."
+                        disabled={isPending}
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-300">
+                      {form.formState.errors.email?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              {/* password */}
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl {...field} id="password">
+                      <Input
+                        {...field}
+                        placeholder="enter password..."
+                        disabled={isPending}
+                        type="password"
+                      />
+                    </FormControl>
+                    <Button
+                      size="sm"
+                      variant={'link'}
+                      asChild
+                      className="px-0 font-normal"
+                    >
+                      <Link href="/auth/reset">Forgot your password?</Link>
+                    </Button>
+                    <FormMessage className="text-red-300">
+                      {form.formState.errors.password?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+            </div>
           )}
           <FormSuccess message={success} />
           <FormErrors message={error || urlError} />
