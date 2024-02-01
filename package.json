@@ -8,7 +8,8 @@
     "start": "next start -p 3001",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "prisma generate"
   },
   "engines": {
     "node": ">=18.0.0",
